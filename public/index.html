@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Keystroke Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        .keystroke-display {
+            font-size: 24px;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #fff;
+            width: 100%;
+            height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Keystrokes in Real-Time</h1>
+    <div id="keystrokeContainer" class="keystroke-display">
+        Waiting for keystrokes...
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        // Listen for incoming keystrokes and display them
+        socket.on('keystroke', (keystroke) => {
+            const container = document.getElementById('keystrokeContainer');
+            container.innerHTML += keystroke;
+            container.scrollTop = container.scrollHeight; // Scroll to the bottom on each update
+        });
+    </script>
+</body>
+</html>
